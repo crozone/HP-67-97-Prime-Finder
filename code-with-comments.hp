@@ -1,0 +1,52 @@
+// Start the program by running from label A:
+// This starts the prime search upwards from number currently in X. If X was less than 2, starts search from 2
+
+LBL A
+	//
+	// Start by rounding the input X value, and checking if it is less than 2.
+	//
+	DSP 0	// Set the display's decimal places to 0 so RND rounds to whole integers
+	RND	// Round X to nearest integer
+	ENTER	// Push the current X,
+	2	// Prepare to subtract 2 from the input number
+	SUBTRACT
+	X<0?	// Is the input number less than 2?
+	0	// Yes, overwrite X with 0. It will be incremented back up to 2 in the coming steps.
+	ENTER // Push starting number to Y
+	1 // Prepare to add 1 to starting number
+	ADD // Add 1 to starting number. The start of LBL 2 increments this again, which is why we don't increment it by 2 here.
+	STO 0 // Store the current number in memory address 0. Let this variable be known as 'i' for code purposes.
+LBL 2
+	0 // Get ready to i++
+	STO I // Retrieve i
+	ISZ(i)
+	1 // Set I back to j's address so j can be decremented easily later on
+	STO I
+	RCL 0
+	SQRT
+	DSP 0 // needed so RND rounds to integers
+	RND
+	INT
+	STO 1 // j
+LBL 3
+	RCL 0
+	ENTER
+	RCL 1
+	DIVIDE
+	ENTER
+	INT
+	SUBTRACT
+	X=0?
+	GTO 4 // i is prime, or j has reached 1.
+	DSZ(i) // Decriment j (I should already be set to address 1 which points to j)
+	GTO 5 // This should never happen, but is a failsafe catch.
+	GTO 3
+LBL 4
+	DSZ(i) // decriment j (I should already be 1 for j)
+			GTO 5 // j _was_ 1, so number is prime, print.
+	GTO 2 // increment i and repeat
+LBL 5
+	RCL 0
+	PRINT X
+	R/S
+	GTO 2
