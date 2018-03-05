@@ -46,3 +46,7 @@ E:
         print x;
         goto B;
 ```
+
+## Video Demonstration:
+
+Currently TODO. I own both of these calculators and plan to record a video demonstrating them in action. The HP-97 actually prints each prime to the thermal paper (instead of just to the screen), so it's quite impressive to watch.
